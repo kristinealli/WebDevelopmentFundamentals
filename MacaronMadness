@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    
+    <title>Macaron Madness</title>
+    <style>
+    body{
+    font-family: 'Quicksand', sans-serif;
+    color: rgb(237, 229, 190);
+    background: black;
+    text-align: center;
+    }
+    
+    p:first-of-type {
+    margin: 20px 20%;
+    text-align: justify;
+    }
+    
+    h1 {
+    font-family: 'Parisienne', 'Times New Roman', Times, serif;
+    color: rgb(75, 232, 232);
+    text-align: center;
+    font-size: 100px;
+    margin-bottom: -1%;
+    }
+    
+    img {
+    position:absolute;
+    height: 100px;
+    }
+    
+    div {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background-color: rgba(183, 142, 172, 0.804);
+    border: solid 5px white;
+    }
+    
+    #rightSide {
+    left: 500px;
+    margin-inline: 50px;
+    }
+    
+    #container {
+    margin: 0 20%;
+    }
+    
+    footer {
+    margin-top: 550px;
+    color: gray;
+    }
+    
+    a{
+    color: rgb(71, 66, 66);
+    }
+    
+   p:last-of-type {
+    text-align: center;
+    }
+    
+    </style>
+</head>
+<body>
+<h1>Macaron Madness</h1>
+<p>Amelie the Baker has a client that always orders boxes of macarons for her clients. In order to not show favoritism, the boxes MUST be identical -  but the new automated assistant keeps accidentally adding an extra macaron to the box on the left! Help Amelie find the extra macaron so she can fill the order! Each time she perfectly finishes the request, the happy patron puts in another, larger order! Good Luck!</p>
+<div id="container">
+<div id="leftSide"></div>
+<div id="rightSide"></div> 
+</div>
+<script> 
+
+/* global variables */
+    window.addEventListener("load", generateMacaron);
+    let numberOfmacarons = 5;
+    const theLeftSide = document.getElementById("leftSide");
+    const theRightSide = document.getElementById("rightSide");
+
+/* create generateMacaron function */
+        function generateMacaron() {
+            for (i = 0; i < numberOfmacarons; i++) {
+                const macaron = document.createElement("img");
+                macaron.src = "/macaron-removebg.png";
+                let top_position = Math.floor(Math.random() * 401);
+                let left_position = Math.floor(Math.random() * 401);
+                macaron.style.top = top_position + "px";
+                macaron.style.left = left_position + "px";
+                theLeftSide.appendChild(macaron);
+            }
+        /* clone images to the right side */
+            const leftSideImages = theLeftSide.cloneNode(true);
+            leftSideImages.removeChild(leftSideImages.lastChild);
+            theRightSide.appendChild(leftSideImages);
+            theLeftSide.lastChild.addEventListener("click", nextLevel);
+            document.body.addEventListener("click", gameOver);
+        }
+    function nextLevel(){
+        event.stopPropagation();
+        while (theLeftSide.firstChild) {
+                theLeftSide.removeChild(theLeftSide.lastChild);
+            };
+        while (theRightSide.firstChild) {
+                theRightSide.removeChild(theRightSide.lastChild);
+            };
+            numberOfmacarons +=5;
+        
+            generateMacaron();
+        }
+    
+        function gameOver(){
+            alert("It's been a sweet run, but Game Over! \n\nYou helped the Baker fill " + i/5 + " orders!");
+            document.body.removeEventListener("click", gameOver);
+            theLeftSide.lastChild.removeEventListener("click", nextlevel);
+        }       
+</script> 
+</body>
+<footer><a href="https://www.flaticon.com/free-icons/macaron" title="macaron icons">Macaron icons created by Freepik - Flaticon</a>
+<p>Game designed and developed by Kristine Johnson as part of NuCamp Web Development Fundamentals.</p></footer>
+</html>
